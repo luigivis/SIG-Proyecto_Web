@@ -1,87 +1,105 @@
 <%-- 
     Document   : login
-    Created on : 03-08-2019, 12:25:27 AM
+    Created on : 02-05-2019, 12:13:39 PM
     Author     : luigivis
 --%>
+<%@page import="dto.*"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="jdbc.*" %>
+<%@ page import = "java.io.*,java.util.*,java.sql.*"%>
+<%@ page import = "javax.servlet.http.*,javax.servlet.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Standard Meta -->
 
-<html>
-    <head>
-        <title>Login</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+        <!-- Site Properties -->
+        <title>Entra-COMUSOL</title>
+
+        <script src='style/js/jquery-3.3.1.js' type="text/javascript"></script>
+        <script  src="style/js/botones_function.js" type="text/javascript"></script>
+        <script src="style/js/semantic.js" type="text/javascript"></script>
+        <script src="style/js/semantic.min.js"></script>
+        <script src="style/datatable/dataTables.semanticui.min.js"
+        type="text/javascript"></script>
+        <script src="style/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="style/datatable/jquery.dataTables.min.js"
+        type="text/javascript"></script>
+
+        <script src="style/datatable/dataTables.semanticui.min.js"
+        type="text/javascript"></script>
+
+        <link rel='stylesheet prefetch' href='style/css/components/icon.min.css'>
+        <link rel='stylesheet prefetch' href='style/css/semantic.css'>
+        <link rel='stylesheet prefetch' href='style/css/dataTables.semanticui.min.css'>
+        <link rel="shortcut icon" href="style/image/comusol_logo.jpg">
+
     </head>
-
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="views/css/materialize.min.css"  media="screen,projection"/>
-
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="views/js/materialize.min.js"></script>
+    <style type="text/css">
+        body {
+            background-color: #FFFFF;
+        }
+        body > .grid {
+            height: 100%;
+        }
+        .image {
+            margin-top: -100px;
+        }
+        .column {
+            max-width: 450px;
+        }
+    </style>
 
     <body>
-        <style>
-            body {
-                background: #E3DFDE;
-            }
+        <% HttpSession login = request.getSession();
+            login.setAttribute("nombre_empleado", null);
+            login.setAttribute("id_empleado", null);
+        %>
 
-            .content {
-                max-width: 500px;
-                top: 50%;
-                margin: auto;
-                padding: 3%;
-            }
-        </style>
 
-        <script>
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    document.getElementById("geoLocation").value = position.coords.latitude + ", " + position.coords.longitude;
-                }
-                );
-            }
-        </script>
-
-        <div class="content">
-            <form action="login.jsp" method="POST">
-
-                <div class="col s12 m6">
-                    <div class="card white darken-1">
-                        <div class="card-content blue-text">
-                            <span class="card-title">Login, Direcciones de Ubicaciones</span>
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">person</i>
-                                <input type="text" id="autocomplete-input" class="autocomplete">
-                                <label for="autocomplete-input">Usuario</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">lock</i>
-                                <input type="password" id="autocomplete-input" class="autocomplete">
-                                <label for="autocomplete-input">Contrasena</label>
-                            </div>
-                        </div>
-                        <div class="card-action">
-                            <button name="enviar" onclick="getLocation()" ><a>Ingresar</a></button>
-                        </div>
-                        <br>
-                        <div class="divider"></div>
-                        <p>No tienes una cuenta?<a href="">Registrate</a></p>      
+        <div class="ui middle aligned center aligned grid">
+            <div class="column">
+                <h2 class="ui teal image header">
+                    <div class="content">
+                        SIG LOGIN
                     </div>
-                </div>    
-                <input name="Location"type="hidden" id="geoLocation" >
-            </form>
-        </div> 
-    </body>
-</html>
+                </h2>
+
+                <form class="ui large form" method="POST" action="login">
+                    <div class="ui stacked segment">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="username" placeholder="Usuario">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="password" name="password" placeholder="Password">
+                            </div>
+                        </div>
+                        <button class="ui fluid large teal submit button"> 
+                            Entrar
+                        </button>
+                    </div>
+                </form>
+
+                <c:if test="${not empty error}">
+                    ${error}
+                </c:if> 
+
+
+            </div>
+        </div>
+
+
+
+
+    </body></html>
