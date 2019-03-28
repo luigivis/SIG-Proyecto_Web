@@ -89,20 +89,13 @@
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="map marker icon"></i>
-                                <input type="text" name="Location" readonly="" id="demo"></input>
+                                <input type="text" readonly  name="Location" id="demo"></input>
                                 <script>
-                                    var x = document.getElementById("demo");
-
-                                    function getLocation() {
-                                        if (navigator.geolocation) {
-                                            navigator.geolocation.getCurrentPosition(showPosition);
-                                        } else {
-                                            x.innerHTML = "Geolocation is not supported by this browser.";
+                                    if (navigator.geolocation) {
+                                        navigator.geolocation.getCurrentPosition(function (position) {
+                                            document.getElementById("demo").value = position.coords.latitude + ", " + position.coords.longitude;
                                         }
-                                    }
-
-                                    function showPosition(position) {
-                                        document.getElementById("demo").value = position.coords.latitude + ", " + position.coords.longitude;
+                                        );
                                     }
                                 </script>
                             </div>
@@ -113,14 +106,8 @@
                         Entrar
                     </button>
                 </form>
-                <br>
-
-                <button onclick="getLocation()" class="ui fluid large teal submit button"> 
-                    Obtener Ubicacion
-                </button>
-
                 <div class="ui message">
-                    No tienes una cuenta? <a href="#">Registrate</a>
+                    No tienes una cuenta? <a href="register.jsp">Registrate</a>
                 </div>
 
                 <c:if test="${not empty error}">
